@@ -2,3 +2,11 @@ name: LobotomPlugin
 version: '${project.version}'
 main: hibikero.lobotomplugin.LobotomPlugin
 api-version: '1.16'
+description: 自定义生物插件
+
+commands:
+  spawnmob:
+    description: 生成自定义生物
+    usage: /<command> <生物ID>
+    permission: lobotom.spawn
+
