@@ -1,0 +1,5 @@
+# 自定义生物配置文件
+Entities:
+  # 波迪的生成概率 (0.0-1.0)
+  Bodi:
+    SpawnChance: 0.1 
