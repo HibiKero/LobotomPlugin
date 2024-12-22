@@ -1,0 +1,4 @@
+name: LobotomPlugin
+version: '${project.version}'
+main: hibikero.lobotomplugin.LobotomPlugin
+api-version: '1.16'
