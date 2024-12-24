@@ -1,6 +1,6 @@
 package hibikero.lobotomplugin.BackEnd.Listener.Player;
 
-import hibikero.lobotomplugin.BackEnd.Manager.SanManager;
+import hibikero.lobotomplugin.BackEnd.System.San.SanManager;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
@@ -11,6 +11,7 @@ public class SanListener implements Listener {
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {
         SanManager.initializePlayer(event.getPlayer());
+        SanManager.startSanDecayTask(event.getPlayer());
     }
     
     @EventHandler
