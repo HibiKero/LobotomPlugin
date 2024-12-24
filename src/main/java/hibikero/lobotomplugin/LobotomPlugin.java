@@ -5,6 +5,7 @@ import hibikero.lobotomplugin.BackEnd.Manager.EntityRegisterManager;
 import hibikero.lobotomplugin.BackEnd.Manager.ListenerRegisterManager;
 import hibikero.lobotomplugin.BackEnd.Config.EntityConfigReader;
 import hibikero.lobotomplugin.BackEnd.Manager.SanDataManager;
+import hibikero.lobotomplugin.BackEnd.Crafting.MultiblockCraftingManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class LobotomPlugin extends JavaPlugin {
@@ -16,6 +17,9 @@ public final class LobotomPlugin extends JavaPlugin {
         
         // 初始化SAN值数据管理器
         SanDataManager.init();
+        
+        // 初始化合成配方
+        MultiblockCraftingManager.initRecipes();
         
         // 加载配置
         EntityConfigReader.loadConfig();
