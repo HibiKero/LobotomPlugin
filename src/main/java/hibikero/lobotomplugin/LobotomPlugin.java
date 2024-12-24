@@ -4,6 +4,7 @@ import hibikero.lobotomplugin.BackEnd.Manager.CommandRegisterManager;
 import hibikero.lobotomplugin.BackEnd.Manager.EntityRegisterManager;
 import hibikero.lobotomplugin.BackEnd.Manager.ListenerRegisterManager;
 import hibikero.lobotomplugin.BackEnd.Config.EntityConfigReader;
+import hibikero.lobotomplugin.BackEnd.Manager.SanDataManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class LobotomPlugin extends JavaPlugin {
@@ -12,6 +13,9 @@ public final class LobotomPlugin extends JavaPlugin {
     @Override
     public void onEnable() {
         instance = this;
+        
+        // 初始化SAN值数据管理器
+        SanDataManager.init();
         
         // 加载配置
         EntityConfigReader.loadConfig();

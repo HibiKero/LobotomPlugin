@@ -9,4 +9,7 @@ commands:
     description: 生成自定义生物
     usage: /<command> <生物ID>
     permission: lobotom.spawn
+  getsan:
+    description: 查看玩家的SAN值
+    usage: /<command> <玩家名称>
 
