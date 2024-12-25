@@ -1,7 +1,6 @@
 package hibikero.lobotomplugin.BackEnd.Listener.Item;
 
 import hibikero.lobotomplugin.BackEnd.Items.SanDetector;
-import hibikero.lobotomplugin.BackEnd.System.San.SanManager;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -29,7 +28,7 @@ public class SanDetectorListener implements Listener {
         }
         
         // 获取并显示目标的精神状态
-        String mentalState = SanManager.getMentalState(target);
+        String mentalState = SanDetector.getMentalState(target);
         player.sendMessage(String.format("§7%s的精神状态: %s", target.getName(), mentalState));
         
         event.setCancelled(true);

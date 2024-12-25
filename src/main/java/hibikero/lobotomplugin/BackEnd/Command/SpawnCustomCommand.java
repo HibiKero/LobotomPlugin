@@ -1,6 +1,6 @@
 package hibikero.lobotomplugin.BackEnd.Command;
 
-import hibikero.lobotomplugin.BackEnd.Entities.CustomEntityManager;
+import hibikero.lobotomplugin.BackEnd.Manager.CustomEntityManager;
 import hibikero.lobotomplugin.BackEnd.Entities.ICustomEntity;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -10,7 +10,6 @@ import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class SpawnCustomCommand implements CommandExecutor, TabCompleter {
     @Override

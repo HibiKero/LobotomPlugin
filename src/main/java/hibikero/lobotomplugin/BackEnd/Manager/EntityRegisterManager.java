@@ -1,7 +1,6 @@
 package hibikero.lobotomplugin.BackEnd.Manager;
 
 import hibikero.lobotomplugin.BackEnd.Entities.Bodi.BodiEntity;
-import hibikero.lobotomplugin.BackEnd.Entities.CustomEntityManager;
 
 public class EntityRegisterManager {
     public static void registerEntities() {

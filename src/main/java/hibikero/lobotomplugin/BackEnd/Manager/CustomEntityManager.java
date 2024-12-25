@@ -1,4 +1,6 @@
-package hibikero.lobotomplugin.BackEnd.Entities;
+package hibikero.lobotomplugin.BackEnd.Manager;
+
+import hibikero.lobotomplugin.BackEnd.Entities.ICustomEntity;
 
 import java.util.HashMap;
 import java.util.Map;

@@ -1,6 +1,7 @@
 package hibikero.lobotomplugin.BackEnd.Command;
 
-import hibikero.lobotomplugin.BackEnd.Manager.SanManager;
+
+import hibikero.lobotomplugin.BackEnd.System.San.SanValueTool;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -31,8 +32,8 @@ public class GetSanCommand implements CommandExecutor, TabCompleter {
             return true;
         }
 
-        int sanValue = SanManager.getSanValue(target);
-        sender.sendMessage(String.format("§7%s的SAN值: §f%d", target.getName(), sanValue));
+        double sanValue = SanValueTool.getSanValue(target);
+        sender.sendMessage(String.format("§7%s的SAN值: §f%.2f", target.getName(), sanValue));
         return true;
     }
 
