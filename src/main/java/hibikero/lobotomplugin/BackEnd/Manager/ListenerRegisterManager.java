@@ -1,5 +1,6 @@
 package hibikero.lobotomplugin.BackEnd.Manager;
 
+import hibikero.lobotomplugin.BackEnd.Listener.Entity.BodiEvent;
 import hibikero.lobotomplugin.BackEnd.Listener.Entity.BodiListener;
 import hibikero.lobotomplugin.BackEnd.Listener.Spawn.BodiSpawnListener;
 import hibikero.lobotomplugin.BackEnd.Listener.Player.SanListener;
@@ -15,9 +16,12 @@ public class ListenerRegisterManager {
         registerListener(plugin, new BodiSpawnListener());
         registerListener(plugin, new SanListener());
         registerListener(plugin, new MultiblockCraftingListener());
+        registerListener(plugin, new BodiEvent());
+        registerListener(plugin, new SanDetectorListener());
     }
 
     private static void registerListener(LobotomPlugin plugin, Listener listener) {
         plugin.getServer().getPluginManager().registerEvents(listener, plugin);
+
     }
 } 

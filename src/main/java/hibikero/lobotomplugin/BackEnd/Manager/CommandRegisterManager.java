@@ -1,22 +1,29 @@
 package hibikero.lobotomplugin.BackEnd.Manager;
 
-import hibikero.lobotomplugin.BackEnd.Command.SpawnCustomCommand;
 import hibikero.lobotomplugin.BackEnd.Command.GetSanCommand;
-import hibikero.lobotomplugin.LobotomPlugin;
-import org.bukkit.command.CommandExecutor;
-import org.bukkit.command.TabCompleter;
+import hibikero.lobotomplugin.BackEnd.Command.LoBoGetCommand;
+import hibikero.lobotomplugin.BackEnd.Command.SanCommand;
+import hibikero.lobotomplugin.BackEnd.Command.SpawnCustomCommand;
+import org.bukkit.plugin.java.JavaPlugin;
 
 public class CommandRegisterManager {
-    public static void registerCommands(LobotomPlugin plugin) {
-        // 注册命令
-        registerCommand(plugin, "spawnmob", new SpawnCustomCommand());
-        registerCommand(plugin, "getsan", new GetSanCommand());
-    }
+    public static void registerCommands(JavaPlugin plugin) {
 
-    private static void registerCommand(LobotomPlugin plugin, String commandName, CommandExecutor executor) {
-        plugin.getCommand(commandName).setExecutor(executor);
-        if (executor instanceof TabCompleter) {
-            plugin.getCommand(commandName).setTabCompleter((TabCompleter) executor);
-        }
+        GetSanCommand getSanCommand = new GetSanCommand();
+        plugin.getCommand("getsan").setExecutor(getSanCommand);
+        plugin.getCommand("getsan").setTabCompleter(null);
+
+        LoBoGetCommand loBoGetCommand = new LoBoGetCommand();
+        plugin.getCommand("LoBoGet").setExecutor(loBoGetCommand);
+        plugin.getCommand("LoBoGet").setTabCompleter(null);
+
+        SanCommand sanCommand = new SanCommand();
+        plugin.getCommand("san").setExecutor(sanCommand);
+        plugin.getCommand("san").setTabCompleter(null);
+
+        SpawnCustomCommand spawnCustomCommand = new SpawnCustomCommand();
+        plugin.getCommand("spawnmob").setExecutor(spawnCustomCommand);
+        plugin.getCommand("spawnmob").setTabCompleter(null);
+
     }
 } 
