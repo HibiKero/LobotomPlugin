@@ -1,8 +1,12 @@
 package hibikero.lobotomplugin.BackEnd.System.San;
 
 import hibikero.lobotomplugin.BackEnd.Manager.SanDataManager;
+import hibikero.lobotomplugin.LobotomPlugin;
+import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -39,6 +43,14 @@ public class SanValueTool {
     public static void reduceSanValue(Player player, double amount) {
         double currentSan = getSanValue(player);
         setSanValue(player, Math.max(currentSan - amount, 0)); // 确保SAN值不低于0
+    }
+
+    public static double loadPlayerSanValue(Player player) {
+        File sanFile = new File(LobotomPlugin.getInstance().getDataFolder(), "playerSan.yml");
+        FileConfiguration config = YamlConfiguration.loadConfiguration(sanFile);
+
+        // 获取玩家的 SAN 值，默认值为 DEFAULT_SAN
+        return config.getDouble(player.getUniqueId().toString(), DEFAULT_SAN);
     }
 
 } 

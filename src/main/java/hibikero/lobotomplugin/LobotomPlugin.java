@@ -7,6 +7,7 @@ import hibikero.lobotomplugin.BackEnd.Config.EntityConfigReader;
 import hibikero.lobotomplugin.BackEnd.Manager.SanDataManager;
 import hibikero.lobotomplugin.BackEnd.Crafting.MultiblockCraftingManager;
 import org.bukkit.plugin.java.JavaPlugin;
+import java.io.File;
 
 public final class LobotomPlugin extends JavaPlugin {
     private static LobotomPlugin instance;
@@ -28,6 +29,11 @@ public final class LobotomPlugin extends JavaPlugin {
         EntityRegisterManager.registerEntities();
         CommandRegisterManager.registerCommands(this);
         ListenerRegisterManager.registerListeners(this);
+        
+        File sanFile = new File(getDataFolder(), "playerSan.yml");
+        if (!sanFile.exists()) {
+            saveResource("playerSan.yml", false); // 创建空文件
+        }
         
         getLogger().info("LobotomPlugin 已启用!");
     }

@@ -14,11 +14,12 @@ public class ExtremeSanEvent {
         double currentSan = SanValueTool.getSanValue(player);
         if (currentSan < 5) {
             // 施加虚弱、挖掘疲劳、饥饿、中毒和失明效果
-            player.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, 20, 1, true, false));
-            player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING, 20, 1, true, false));
-            player.addPotionEffect(new PotionEffect(PotionEffectType.HUNGER, 20, 1, true, false));
-            player.addPotionEffect(new PotionEffect(PotionEffectType.POISON, 20, 1, true, false));
-            player.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 20, 1, true, false)); // 施加失明效果
+            player.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, 200, 1, true, false));
+            player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING, 200, 1, true, false));
+            player.addPotionEffect(new PotionEffect(PotionEffectType.HUNGER, 200, 1, true, false));
+            player.addPotionEffect(new PotionEffect(PotionEffectType.POISON, 200, 1, true, false));
+            player.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 200, 1, true, false)); // 施加失明效果
+            player.addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, 200, 1, true, false)); // 添加反胃效果
 
             // 角色随机移动
             new BukkitRunnable() {

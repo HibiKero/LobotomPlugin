@@ -2,8 +2,8 @@ package hibikero.lobotomplugin.BackEnd.Manager;
 
 import hibikero.lobotomplugin.BackEnd.Command.GetSanCommand;
 import hibikero.lobotomplugin.BackEnd.Command.LoBoGetCommand;
+import hibikero.lobotomplugin.BackEnd.Command.LoBoSpawnCommand;
 import hibikero.lobotomplugin.BackEnd.Command.SanCommand;
-import hibikero.lobotomplugin.BackEnd.Command.SpawnCustomCommand;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class CommandRegisterManager {
@@ -17,13 +17,13 @@ public class CommandRegisterManager {
         plugin.getCommand("LoBoGet").setExecutor(loBoGetCommand);
         plugin.getCommand("LoBoGet").setTabCompleter(null);
 
+        LoBoSpawnCommand loBoSpawnCommand = new LoBoSpawnCommand();
+        plugin.getCommand("LoBoSpawn").setExecutor(loBoSpawnCommand);
+        plugin.getCommand("LoBoSpawn").setTabCompleter(null);
+
         SanCommand sanCommand = new SanCommand();
         plugin.getCommand("san").setExecutor(sanCommand);
         plugin.getCommand("san").setTabCompleter(null);
-
-        SpawnCustomCommand spawnCustomCommand = new SpawnCustomCommand();
-        plugin.getCommand("spawnmob").setExecutor(spawnCustomCommand);
-        plugin.getCommand("spawnmob").setTabCompleter(null);
 
     }
 } 
