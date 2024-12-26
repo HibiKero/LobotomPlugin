@@ -5,6 +5,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.Location;
 
 
 public class ExtremeSanEvent {
@@ -27,7 +28,10 @@ public class ExtremeSanEvent {
                         // 随机生成一个角度
                         float randomYaw = (float) (Math.random() * 360);
                         // 设置玩家的朝向
-                        player.setRotation(randomYaw, player.getLocation().getPitch());
+                        Location location = player.getLocation();
+                        location.setYaw(randomYaw);
+                        location.setPitch(player.getLocation().getPitch());
+                        player.teleport(location);
                         // 向前移动
                         player.setVelocity(player.getLocation().getDirection().multiply(0.5)); // 向前移动
                     } else {

@@ -48,10 +48,11 @@ public class BodiEntity implements ICustomEntity{
     }
 
     private void setupCustomWolf(Wolf wolf) {
+        wolf.setMaxHealth(MAX_HEALTH); // 设置最大生命值
+        wolf.setHealth(MAX_HEALTH); // 设置当前生命值
         wolf.setAngry(true);
         wolf.setCustomName("§c波迪");
         wolf.setCustomNameVisible(true);
-        wolf.setHealth(MAX_HEALTH); // 设置波迪的最大生命值
         wolf.setTamed(false);
         wolf.setAgeLock(true);
         

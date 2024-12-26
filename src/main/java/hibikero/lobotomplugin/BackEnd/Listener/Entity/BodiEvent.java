@@ -1,5 +1,6 @@
 package hibikero.lobotomplugin.BackEnd.Listener.Entity;
 
+import hibikero.lobotomplugin.BackEnd.Entities.Bodi.BodiData;
 import hibikero.lobotomplugin.BackEnd.Entities.Bodi.BodiEntity;
 import hibikero.lobotomplugin.BackEnd.Items.DogFur;
 import hibikero.lobotomplugin.BackEnd.System.San.SanValueTool;
@@ -32,18 +33,13 @@ public class BodiEvent  implements Listener {
 
     @EventHandler
     public void onEntityDamage(EntityDamageByEntityEvent event) {
-        BodiEntity bodi = (BodiEntity) event.getEntity();
-        if (event.getDamager() instanceof Wolf) {
-            // 如果狼攻击其他生物，造成9点伤害
-            event.setDamage(ATTACK_DAMAGE);
-            targetEntity = event.getEntity(); // 设置当前仇恨目标
-            applySpeedEffect((Wolf) bodi); // 施加速度效果
-            isAngry = true; // 设置波迪为愤怒状态
-            startHowlingAndSanDecrease((Wolf) bodi); // 开始嚎叫和SAN值下降
-        } else if (event.getEntity() instanceof Wolf) {
-            // 如果波迪受到攻击，设置仇恨目标为攻击者
+        Entity entity = event.getEntity();
+        if (isBodi(entity)) { // 检查是否是Bodi实体
+            BodiEntity bodi = (BodiEntity) entity; 
+            // 设置仇恨目标为攻击者
             targetEntity = event.getDamager();
             isAngry = true; // 设置波迪为愤怒状态
+            event.setDamage(BodiData.ATTACK_DAMAGE); 
             applySpeedEffect((Wolf) bodi); // 施加速度效果
             startHowlingAndSanDecrease((Wolf) bodi); // 开始嚎叫和SAN值下降
         }
