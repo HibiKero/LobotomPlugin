@@ -6,11 +6,13 @@ import hibikero.lobotomplugin.BackEnd.Manager.ListenerRegisterManager;
 import hibikero.lobotomplugin.BackEnd.Config.EntityConfigReader;
 import hibikero.lobotomplugin.BackEnd.Manager.SanDataManager;
 import hibikero.lobotomplugin.BackEnd.Crafting.MultiblockCraftingManager;
+import hibikero.lobotomplugin.BackEnd.Entities.Bodi.BodiWolf;
 import org.bukkit.plugin.java.JavaPlugin;
 import java.io.File;
 
 public final class LobotomPlugin extends JavaPlugin {
     private static LobotomPlugin instance;
+    private BodiWolf bodiWolf;
 
     @Override
     public void onEnable() {
@@ -34,6 +36,7 @@ public final class LobotomPlugin extends JavaPlugin {
         if (!sanFile.exists()) {
             saveResource("playerSan.yml", false); // 创建空文件
         }
+
         
         getLogger().info("LobotomPlugin 已启用!");
     }

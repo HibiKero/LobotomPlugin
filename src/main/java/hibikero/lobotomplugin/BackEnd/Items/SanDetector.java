@@ -44,7 +44,7 @@ public class SanDetector {
 
         if (sanValue <= 30) {
             color = "§c"; // 红色
-            message = "你感觉你愈发疯狂了！";
+            message = "他疯了，他已经疯了";
         } else if (sanValue <= 70) {
             color = "§6"; // 橙色
             message = "小心为好，他心中有一个愈加强大的恶魔。";

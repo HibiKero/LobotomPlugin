@@ -4,8 +4,10 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.EntityType;
 import org.bukkit.Location;
 import org.bukkit.World;
+import org.bukkit.entity.Wolf;
 import org.bukkit.plugin.Plugin;
-import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 
 public class BodiEntity {
     private BodiWolf bodiWolf;
@@ -22,6 +24,8 @@ public class BodiEntity {
             bodiWolf.getWolf().setCustomNameVisible(true); // 显示名称
         }
     }
+
+
 
     // 其他波迪的特性和行为方法
 }

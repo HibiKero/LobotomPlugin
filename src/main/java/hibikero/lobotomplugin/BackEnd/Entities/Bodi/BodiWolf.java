@@ -12,6 +12,8 @@ import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.Material;
+import org.bukkit.persistence.PersistentDataType;
+import org.bukkit.NamespacedKey;
 
 import java.util.HashMap;
 import java.util.List;
@@ -19,7 +21,8 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class BodiWolf {
-    private Wolf wolf;
+    private final Wolf wolf;
+    private static final NamespacedKey BODI_KEY = new NamespacedKey("lobotomplugin", "is_bodi");
     private Map<Player, Integer> playerProximityTime; // 记录玩家在波迪附近的时间
 
     public BodiWolf(Plugin plugin, World world, Location location) {
@@ -31,6 +34,9 @@ public class BodiWolf {
 
         playerProximityTime = new HashMap<>(); // 初始化玩家时间记录
 
+        // 设置 NBT 标签
+        wolf.getPersistentDataContainer().set(BODI_KEY, PersistentDataType.BYTE, (byte) 1);
+
         // 启动定时任务
         startSanIncreaseTask(plugin);
     }
@@ -39,10 +45,24 @@ public class BodiWolf {
         return wolf;
     }
 
+    public boolean isBodi() {
+        return wolf.getPersistentDataContainer().has(BODI_KEY, PersistentDataType.BYTE);
+    }
+
     private void startSanIncreaseTask(Plugin plugin) {
         new BukkitRunnable() {
             @Override
             public void run() {
+                if (wolf.getTarget() != null) {
+                    // 如果波迪有攻击目标，应用效果
+                    wolf.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, 2, false, false));
+                    wolf.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, Integer.MAX_VALUE, 2, false, false));
+                } else {
+                    // 如果没有攻击目标，取消效果
+                    wolf.removePotionEffect(PotionEffectType.SPEED);
+                    wolf.removePotionEffect(PotionEffectType.INCREASE_DAMAGE);
+                }
+
                 // 获取波迪的位置
                 Location bodiLocation = wolf.getLocation();
                 // 查找10米内的玩家
@@ -61,6 +81,10 @@ public class BodiWolf {
                     // 如果玩家在波迪附近超过10秒，施加缓慢效果
                     if (playerProximityTime.get(player) >= 10) {
                         player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, Integer.MAX_VALUE, 1, true, false));
+                    }
+
+                    if (playerProximityTime.get(player) >= 15) {
+                        wolf.setTarget(player);
                     }
 
                     // 检查玩家是否持有骨头
