@@ -27,12 +27,21 @@ public class BodiWolf {
 
     public BodiWolf(Plugin plugin, World world, Location location) {
         this.wolf = (Wolf) world.spawnEntity(location, EntityType.WOLF);
-        wolf.setTamed(false); // 确保波迪不能被驯服
-        wolf.setAngry(false); // 初始状态不愤怒
-        wolf.setMaxHealth(BodiData.MAX_HEALTH); // 设置最大生命值
-        wolf.setHealth(BodiData.MAX_HEALTH); // 设置当前生命值
+        initializeWolf(plugin);
+    }
 
-        playerProximityTime = new HashMap<>(); // 初始化玩家时间记录
+    // 新增构造函数，用于从现有的Wolf实体创建BodiWolf
+    public BodiWolf(Plugin plugin, Wolf existingWolf) {
+        this.wolf = existingWolf;
+        initializeWolf(plugin);
+    }
+
+    private void initializeWolf(Plugin plugin) {
+        wolf.setTamed(false);
+        wolf.setAngry(false);
+        wolf.setMaxHealth(BodiData.MAX_HEALTH);
+        wolf.setHealth(BodiData.MAX_HEALTH);
+        playerProximityTime = new HashMap<>();
 
         // 设置 NBT 标签
         wolf.getPersistentDataContainer().set(BODI_KEY, PersistentDataType.BYTE, (byte) 1);
