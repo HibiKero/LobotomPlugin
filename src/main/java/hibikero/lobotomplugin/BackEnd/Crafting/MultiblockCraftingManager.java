@@ -32,10 +32,6 @@ public class MultiblockCraftingManager {
     }
 
     public static CraftingResult tryCraft(Block topBlock) {
-        if (!isValidStructure(topBlock)) {
-            return new CraftingResult(false, null, "§c无效的合成结构！");
-        }
-
         Block middleBlock = topBlock.getRelative(0, -1, 0);
         Dispenser dispenser = (Dispenser) middleBlock.getState();
         Inventory inv = dispenser.getInventory();
@@ -46,14 +42,31 @@ public class MultiblockCraftingManager {
         // 检查是否匹配任何配方
         for (ICraftingRecipe recipe : recipes) {
             if (recipe.matches(items)) {
-                // 清空发射器
-                inv.clear();
-                // 放入结果物品
+                // 获取配方所需的物品数组
+                ItemStack[] requiredItems = recipe.getRequiredItems();
+                
+                // 减少对应格子中的物品数量
+                for (int i = 0; i < 9; i++) {
+                    if (requiredItems[i] != null && items[i] != null) {
+                        int newAmount = items[i].getAmount() - requiredItems[i].getAmount();
+                        if (newAmount > 0) {
+                            items[i].setAmount(newAmount);
+                        } else {
+                            items[i] = null;
+                        }
+                    }
+                }
+                
+                // 更新发射器内容
+                inv.setContents(items);
+                
+                // 在发射器中放入结果物品并返回成功
                 inv.addItem(recipe.getResult());
-                return new CraftingResult(true, recipe.getResult(), "§a合成成功！");
+                return new CraftingResult(true, null, null);
             }
         }
 
-        return new CraftingResult(false, null, "§c材料不正确或摆放位置错误！");
+        // 如果没有匹配的配方，返回失败
+        return new CraftingResult(false, null, null);
     }
 } 

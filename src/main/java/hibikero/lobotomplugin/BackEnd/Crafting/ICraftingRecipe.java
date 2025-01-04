@@ -11,4 +11,7 @@ public interface ICraftingRecipe {
     
     // 获取配方ID
     String getRecipeId();
+
+    // 获取配方所需的物品数组
+    ItemStack[] getRequiredItems();
 } 

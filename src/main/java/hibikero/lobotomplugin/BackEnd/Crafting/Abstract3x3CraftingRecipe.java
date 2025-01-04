@@ -52,4 +52,16 @@ public abstract class Abstract3x3CraftingRecipe implements ICraftingRecipe {
     public String getRecipeId() {
         return recipeId;
     }
+
+    @Override
+    public ItemStack[] getRequiredItems() {
+        // 返回配方模式的克隆，以防止外部修改
+        ItemStack[] required = new ItemStack[9];
+        for (int i = 0; i < 9; i++) {
+            if (pattern[i] != null) {
+                required[i] = pattern[i].clone();
+            }
+        }
+        return required;
+    }
 } 
