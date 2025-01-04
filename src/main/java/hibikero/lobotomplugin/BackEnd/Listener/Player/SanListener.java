@@ -20,6 +20,9 @@ public class SanListener implements Listener {
     
     @EventHandler
     public void onPlayerQuit(PlayerQuitEvent event) {
-        SanValueTool.removePlayer(event.getPlayer());
+        Player player = event.getPlayer();
+        double currentSan = SanValueTool.getSanValue(player);
+        SanValueTool.setSanValue(player, currentSan);
+        SanValueTool.removePlayer(player);
     }
 } 

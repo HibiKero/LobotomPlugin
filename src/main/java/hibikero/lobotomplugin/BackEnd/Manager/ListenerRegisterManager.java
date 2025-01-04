@@ -4,6 +4,8 @@ package hibikero.lobotomplugin.BackEnd.Manager;
 import hibikero.lobotomplugin.BackEnd.Listener.Player.SanListener;
 import hibikero.lobotomplugin.BackEnd.Listener.Item.SanDetectorListener;
 import hibikero.lobotomplugin.BackEnd.Listener.Entity.BodiPersistenceListener;
+import hibikero.lobotomplugin.BackEnd.Listener.Entity.BodiDeathListener;
+import hibikero.lobotomplugin.BackEnd.Listener.Entity.BodiShearListener;
 import hibikero.lobotomplugin.BackEnd.Listener.Crafting.MultiblockCraftingListener;
 import hibikero.lobotomplugin.LobotomPlugin;
 import org.bukkit.event.Listener;
@@ -17,6 +19,8 @@ public class ListenerRegisterManager {
         registerListener(plugin, new MultiblockCraftingListener());
         registerListener(plugin, new SanDetectorListener());
         registerListener(plugin, new BodiPersistenceListener(plugin));
+        registerListener(plugin, new BodiDeathListener());
+        registerListener(plugin, new BodiShearListener(plugin));
     }
 
     private static void registerListener(LobotomPlugin plugin, Listener listener) {

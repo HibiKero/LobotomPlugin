@@ -16,41 +16,44 @@ public class SanValueTool {
     private static final int MAX_SAN = 200;
     private static final Map<UUID, Double> playerSanValues = new HashMap<>();
 
-
     public static void initializePlayer(Player player) {
-        setSanValue(player, DEFAULT_SAN);
+        if (SanDataManager.hasData(player.getUniqueId())) {
+            double storedSan = loadPlayerSanValue(player);
+            setSanValue(player, storedSan);
+        } else {
+            setSanValue(player, DEFAULT_SAN);
+        }
     }
 
     public static double getSanValue(Player player) {
-        return playerSanValues.getOrDefault(player.getUniqueId(), (double) DEFAULT_SAN);
+        return playerSanValues.getOrDefault(player.getUniqueId(), loadPlayerSanValue(player));
     }
 
     public static void removePlayer(Player player) {
+        if (playerSanValues.containsKey(player.getUniqueId())) {
+            double currentSan = playerSanValues.get(player.getUniqueId());
+            SanDataManager.saveSanValue(player.getUniqueId(), (int) currentSan);
+        }
         playerSanValues.remove(player.getUniqueId());
     }
 
     public static void setSanValue(Player player, double value) {
         double sanValue = Math.min(Math.max(value, 0), MAX_SAN);
         playerSanValues.put(player.getUniqueId(), sanValue);
-        SanDataManager.saveSanValue(player.getUniqueId(), (int) sanValue); // 保存时向下取整
+        SanDataManager.saveSanValue(player.getUniqueId(), (int) sanValue);
     }
 
     public static void increaseSanValue(Player player, double amount) {
         double currentSan = getSanValue(player);
-        setSanValue(player, Math.min(currentSan + amount, MAX_SAN)); // 确保SAN值不超过上限
+        setSanValue(player, Math.min(currentSan + amount, MAX_SAN));
     }
 
     public static void reduceSanValue(Player player, double amount) {
         double currentSan = getSanValue(player);
-        setSanValue(player, Math.max(currentSan - amount, 0)); // 确保SAN值不低于0
+        setSanValue(player, Math.max(currentSan - amount, 0));
     }
 
     public static double loadPlayerSanValue(Player player) {
-        File sanFile = new File(LobotomPlugin.getInstance().getDataFolder(), "playerSan.yml");
-        FileConfiguration config = YamlConfiguration.loadConfiguration(sanFile);
-
-        // 获取玩家的 SAN 值，默认值为 DEFAULT_SAN
-        return config.getDouble(player.getUniqueId().toString(), DEFAULT_SAN);
+        return SanDataManager.loadSanValue(player.getUniqueId());
     }
-
 } 

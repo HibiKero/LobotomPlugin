@@ -13,7 +13,7 @@ public class SanAlert {
 
     public static void checkSanAlert(Player player) {
         double currentSan = SanValueTool.getSanValue(player);
-        if (currentSan < 15) {
+        if (currentSan < 20) {
             long currentTime = System.currentTimeMillis();
             if (!insanityCooldowns.containsKey(player.getUniqueId()) || 
                 currentTime - insanityCooldowns.get(player.getUniqueId()) > INSANITY_COOLDOWN_TIME_MAX) {

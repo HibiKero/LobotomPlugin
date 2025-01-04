@@ -21,7 +21,7 @@ public class PerSecondSan {
         if (Bukkit.getWorlds().get(0).getTime() >= 13000 && Bukkit.getWorlds().get(0).getTime() <= 23000) {
             Location playerLocation = player.getLocation();
             if (playerLocation.getBlock().getLightLevel() <= 8) {
-                SanValueTool.reduceSanValue(player, 0.1); // 每秒减少0.1点SAN值
+                SanValueTool.reduceSanValue(player, 0.3); // 每秒减少0.1点SAN值
             }
         }
     }
