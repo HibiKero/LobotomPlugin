@@ -1,6 +1,5 @@
 package hibikero.lobotomplugin.BackEnd.Entities.Bodi;
 
-import hibikero.lobotomplugin.BackEnd.Entities.EntityPersistenceManager;
 import hibikero.lobotomplugin.BackEnd.System.San.SanValueTool;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -13,6 +12,8 @@ import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.Material;
+import org.bukkit.persistence.PersistentDataType;
+import org.bukkit.NamespacedKey;
 
 import java.util.HashMap;
 import java.util.List;
@@ -21,38 +22,22 @@ import java.util.stream.Collectors;
 
 public class BodiWolf {
     private final Wolf wolf;
-    private final EntityPersistenceManager persistenceManager;
-    private Map<Player, Integer> playerProximityTime;
-    public static final String ENTITY_ID = "bodi_wolf";
+    private static final NamespacedKey BODI_KEY = new NamespacedKey("lobotomplugin", "is_bodi");
+    private Map<Player, Integer> playerProximityTime; // 记录玩家在波迪附近的时间
 
     public BodiWolf(Plugin plugin, World world, Location location) {
         this.wolf = (Wolf) world.spawnEntity(location, EntityType.WOLF);
-        this.persistenceManager = new EntityPersistenceManager(plugin);
-        this.persistenceManager.registerEntityType(ENTITY_ID);
-        initializeWolf(plugin);
-    }
+        wolf.setTamed(false); // 确保波迪不能被驯服
+        wolf.setAngry(false); // 初始状态不愤怒
+        wolf.setMaxHealth(BodiData.MAX_HEALTH); // 设置最大生命值
+        wolf.setHealth(BodiData.MAX_HEALTH); // 设置当前生命值
 
-    public BodiWolf(Plugin plugin, Wolf existingWolf) {
-        this.wolf = existingWolf;
-        this.persistenceManager = new EntityPersistenceManager(plugin);
-        this.persistenceManager.registerEntityType(ENTITY_ID);
-        initializeWolf(plugin);
-    }
+        playerProximityTime = new HashMap<>(); // 初始化玩家时间记录
 
-    private void initializeWolf(Plugin plugin) {
-        wolf.setTamed(false);
-        wolf.setAngry(false);
-        wolf.setCustomName("波迪");
-        wolf.setCustomNameVisible(true);
-        
-        // 使用持久化管理器标记和恢复实体状态
-        if (!persistenceManager.isCustomEntity(wolf, ENTITY_ID)) {
-            persistenceManager.markEntity(wolf, ENTITY_ID, BodiData.MAX_HEALTH);
-        } else {
-            persistenceManager.restoreEntityState(wolf, ENTITY_ID, BodiData.MAX_HEALTH);
-        }
-        
-        playerProximityTime = new HashMap<>();
+        // 设置 NBT 标签
+        wolf.getPersistentDataContainer().set(BODI_KEY, PersistentDataType.BYTE, (byte) 1);
+
+        // 启动定时任务
         startSanIncreaseTask(plugin);
     }
 
@@ -61,25 +46,19 @@ public class BodiWolf {
     }
 
     public boolean isBodi() {
-        return persistenceManager.isCustomEntity(wolf, ENTITY_ID);
+        return wolf.getPersistentDataContainer().has(BODI_KEY, PersistentDataType.BYTE);
     }
 
     private void startSanIncreaseTask(Plugin plugin) {
         new BukkitRunnable() {
             @Override
             public void run() {
-                if (!wolf.isValid() || wolf.isDead()) {
-                    this.cancel();
-                    return;
-                }
-
-                // 每次更新时保存状态
-                persistenceManager.saveEntityState(wolf, ENTITY_ID);
-
                 if (wolf.getTarget() != null) {
+                    // 如果波迪有攻击目标，应用效果
                     wolf.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, 2, false, false));
                     wolf.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, Integer.MAX_VALUE, 2, false, false));
                 } else {
+                    // 如果没有攻击目标，取消效果
                     wolf.removePotionEffect(PotionEffectType.SPEED);
                     wolf.removePotionEffect(PotionEffectType.INCREASE_DAMAGE);
                 }
@@ -134,7 +113,7 @@ public class BodiWolf {
                     }
                 }
             }
-        }.runTaskTimer(plugin, 0, 20);
+        }.runTaskTimer(plugin, 0, 20); // 使用插件实例
     }
 
     // 可以在这里添加波迪特有的行为和属性

@@ -1,6 +1,7 @@
 package hibikero.lobotomplugin.BackEnd.Crafting;
 
 import hibikero.lobotomplugin.BackEnd.Crafting.Recipes.SanDetectorRecipe;
+import hibikero.lobotomplugin.BackEnd.Crafting.Recipes.DogFurChestplateRecipe;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.Dispenser;
@@ -16,6 +17,7 @@ public class MultiblockCraftingManager {
     public static void initRecipes() {
         // 注册配方
         recipes.add(new SanDetectorRecipe());
+        recipes.add(new DogFurChestplateRecipe());
     }
 
     public static boolean isValidStructure(Block topBlock) {
